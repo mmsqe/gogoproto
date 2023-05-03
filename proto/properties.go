@@ -48,6 +48,8 @@ import (
 	"strconv"
 	"strings"
 	"sync"
+
+	gogoproto "github.com/gogo/protobuf/proto"
 )
 
 const debug bool = false
@@ -557,6 +559,8 @@ func RegisterType(x Message, name string) {
 		protoTypedNils[name] = reflect.Zero(t).Interface().(Message)
 	}
 	revProtoTypes[t] = name
+
+	gogoproto.RegisterType(x, name)
 }
 
 // RegisterMapType is called from generated code and maps from the fully qualified

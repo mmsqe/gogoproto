@@ -586,7 +586,11 @@ func MessageName(x Message) string {
 	if m, ok := x.(xname); ok {
 		return m.XXX_MessageName()
 	}
-	return revProtoTypes[reflect.TypeOf(x)]
+	name, ok := revProtoTypes[reflect.TypeOf(x)]
+	if !ok {
+		name = gogoproto.MessageName(x)
+	}
+	return name
 }
 
 // MessageType returns the message type (pointer to struct) for a named message.
